@@ -52,7 +52,7 @@ function App() {
         <p className="text-sm text-gray-600">
           Your CSRF Token: 
           <span className="block w-full p-2 mt-1 font-mono text-xs text-green-700 bg-green-50 rounded break-all">
-            {csrfToken || 'Fetching...'}
+            {csrfToken || 'Fetchingg...'}
           </span>
         </p>
 
