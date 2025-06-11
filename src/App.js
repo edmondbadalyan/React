@@ -1,10 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import MovieSearch from './components/MovieSearch';
 
 function App() {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600">Привет, Tailwind!</h1>
+    <div className="App">
+      <MovieSearch />
     </div>
   );
 }
