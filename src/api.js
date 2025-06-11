@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-// Create an axios instance
+// Создаем экземпляр axios
 const api = axios.create({
-  baseURL: '/api/v1', // The base URL for our API
-  withCredentials: true, // This is crucial for sending the session cookie
+  baseURL: '/api/v1', // Базовый URL для нашего API
+  withCredentials: true, // Это критически важно для отправки cookie сессии
 });
 
-// Function to set the CSRF token on the axios instance
+// Функция для установки CSRF-токена в экземпляр axios
 export const setCsrfToken = (token) => {
   api.defaults.headers.common['x-csrf-token'] = token;
 };

@@ -4,41 +4,41 @@ const crypto = require('crypto');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3001; // Port for our backend server
+const PORT = 3001; // Порт для нашего бэкенд-сервера
 
-// Middleware Setup
-// Enable CORS for our React app which will run on port 3000
+// Настройка Middleware
+// Включаем CORS для нашего React-приложения, которое будет работать на порту 3000
 app.use(cors({
   origin: 'http://localhost:3000',
-  credentials: true, // Allow cookies to be sent
+  credentials: true, // Разрешаем отправку cookie
 }));
 
-// To parse JSON bodies
+// Для парсинга JSON-тел запросов
 app.use(express.json());
-// To parse URL-encoded bodies
+// Для парсинга URL-encoded тел запросов
 app.use(express.urlencoded({ extended: true }));
 
-// Session Middleware
-// In a real app, use a persistent session store like connect-redis.
+// Middleware для сессий
+// В реальном приложении используйте постоянное хранилище сессий, например, connect-redis.
 app.use(session({
   secret: 'a_very_secret_key_for_signing_session_id',
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: false, // In production, set this to true and use HTTPS
-    httpOnly: true, // Prevents client-side JS from accessing the session cookie
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
+    secure: false, // В production установите true и используйте HTTPS
+    httpOnly: true, // Запрещает доступ к cookie сессии из клиентского JS
+    maxAge: 1000 * 60 * 60 * 24 // 1 день
   }
 }));
 
-// CSRF Protection Middleware
+// Middleware для защиты от CSRF
 const csrfProtection = (req, res, next) => {
-  // Generate CSRF secret in session if it doesn't exist
+  // Генерируем CSRF-секрет в сессии, если он не существует
   if (!req.session.csrfSecret) {
     req.session.csrfSecret = crypto.randomBytes(32).toString('hex');
   }
 
-  // Check token on "unsafe" methods
+  // Проверяем токен на "небезопасных" методах
   if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
     const tokenFromRequest = req.headers['x-csrf-token'];
     
@@ -53,13 +53,13 @@ const csrfProtection = (req, res, next) => {
   next();
 };
 
-// Apply CSRF protection to all routes
+// Применяем CSRF-защиту ко всем маршрутам
 app.use(csrfProtection);
 
 
-// API Routes
+// Маршруты API
 app.get('/api/v1/csrf-token', (req, res) => {
-  // Send the token to the client
+  // Отправляем токен клиенту
   res.json({ csrfToken: req.session.csrfSecret });
 });
 
@@ -70,7 +70,7 @@ app.post('/api/v1/submit', (req, res) => {
 });
 
 
-// Start Server
+// Запуск сервера
 app.listen(PORT, () => {
   console.log(`Backend server running on http://localhost:${PORT}`);
   console.log('This server provides CSRF tokens and handles protected API calls.');

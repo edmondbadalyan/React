@@ -8,13 +8,13 @@ function App() {
   const [error, setError] = useState('');
   const [csrfToken, setToken] = useState('');
 
-  // Fetch CSRF token on component mount
+  // Запрашиваем CSRF-токен при монтировании компонента
   useEffect(() => {
     const fetchCsrfToken = async () => {
       try {
         const { data } = await api.get('/csrf-token');
         setToken(data.csrfToken);
-        setCsrfToken(data.csrfToken); // Set token for subsequent requests
+        setCsrfToken(data.csrfToken); // Устанавливаем токен для последующих запросов
       } catch (err) {
         console.error('Failed to fetch CSRF token', err);
         setError('Could not initialize session. Please refresh the page.');
