@@ -1,10 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import DynamicForm from './components/DynamicForm';
 
 function App() {
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600">Привет, Tailwind!</h1>
+    <div className="bg-gray-50 min-h-screen p-4 sm:p-8 font-sans">
+      <DynamicForm />
     </div>
   );
 }
